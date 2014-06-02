@@ -1,5 +1,5 @@
-require "active_record"
-require "mysql2"
+require 'active_record'
+require 'mysql2'
 require 'yaml'
 require './mailer.rb'
 
@@ -7,7 +7,7 @@ $config = YAML.load_file('config.yml')
 config_database = $config['database']
 
 ActiveRecord::Base.establish_connection(
-  adapter:  "mysql2",
+  adapter:  'mysql2',
   username: config_database['username'],
   password: config_database['password'],
   database: config_database['database'],

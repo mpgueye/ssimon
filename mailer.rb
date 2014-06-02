@@ -20,8 +20,8 @@ class Notification < ActionMailer::Base
   def notif(recipient)
     @recipient = recipient
     mail(:bcc => recipient,
-      :subject => "[2si] systeme notification taches non faites") do |format|
-      format.text { render text: "Impossible actuellement d'envoyer des messages!" }
+      :subject => $config_smtp_server['subject']) do |format|
+      format.text { render text: 'Impossible actuellement d\'envoyer des messages!' }
     end
   end
 end
