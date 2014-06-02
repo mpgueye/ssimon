@@ -38,3 +38,14 @@ mails_notif:
 + smtp_server : configuration du serveur SMTP pour l'envoi des mails
 + directories : liste des répertoires à vérifier
 + mails_notif : liste des adresses email où on doit envoyer les mails de notification
+
+Execution
+---------
+Se déplacer sur le repertoire de l'application et exécuter la commande suivante :
+```bash
+./main.rb
+```
+ou
+```bash
+ruby main.rb
+```
