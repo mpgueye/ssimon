@@ -27,6 +27,7 @@ class BdTask < ActiveRecord::Base
     # puts "les taches suivantes ne sont pas traitees :"
     # puts untreated.map { |e| "- ##{e.msgID}" }
     Notification.notif($config['mails_notif']).deliver
+    puts 'OK1'
     return true
   end
 end
@@ -37,6 +38,7 @@ class FileTask
     # puts "les fichiers suivants ne sont pas traites :"
     # puts untreated.map { |e| "- #{e}" }
     Notification.notif($config['mails_notif']).deliver
+    puts 'OK2'
     return true
   end
 
