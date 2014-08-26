@@ -1,18 +1,14 @@
+frequence_cron: 60
 database:
+  adapter: mysql2
   host: localhost
   username: 2si
   password: passer
   database: 2si
 smtp_server:
-  address: smtp.alwaysdata.com
+  address: smtpgp1-med.orange.sn
   port: 25
-  user_name: demo@scicasoft.com
-  password: scicademopass!!!
-  label: 'ssimon'
-  subject: '[2si] systeme notification taches non faites'
-directories:
-  - /chemin/vers/repertoire/1
-  - /chemin/vers/repertoire/2
+  user_name: demo@test.com
 mails_notif:
   - username1@domain.ext
   - username2@domain.ext
