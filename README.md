@@ -11,6 +11,25 @@ bundle install
 ```
 Ensuite ajouter les tables qui se trouve dans le fichier `base.sql` sur votre base de données
 
+Description des tables
+----------------------
+1. mon_clients : liste des clients
+  + nom : nom du client
+  + repertoire : repertoire ou se trouve les fichiers du clients
+  + repertoire_backup : le repertoire de backup du client
+  + nb_minutes_attentes_file : le délai de traitement des fichiers du clients
+  + heure_detection_trafic_quotidien : l'heure a laquelle on doit verifier s'il y a un trafic dans la journée pour le client
+2. mon_contacts : liste des contacts des clients
+  + client_id : l'identifiant du client (ca vient de la table mon_clients)
+  + email : l'email du contact
+3. mon_historique_cron : pour historiser les dates d'execution du crno
+  + date : date d'execution du cron
+4. mon_plage_horaires : les plages horaires pour vérifier les trafics par plage horaire
+  + client_id : l'identifiant du client (ca vient de la table mon_clients)
+  + jour : le jour de la semaine (0=>dimanche, 1=>lundi, 2=>mardi, 3=>mercredi, 4=>jeudi, 5=>vendredi, 6=>samedi)
+  + heure_debut : l'heure du début de la plage
+  + heure_fin : l'heure de la fin de la plage
+
 Configuration
 -------------
 Il faut configurer les 4 blocs du fichier config.yml :
