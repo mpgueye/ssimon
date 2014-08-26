@@ -36,18 +36,7 @@ class Journal < ActiveRecord::Base
     "#{client.repertoire_backup}/#{jrlPushFile}.old"
   end
 
-  def fichiers_non_traites
-    return [] if self.repertoire.nil?
-    begin
-      return (Dir.entries(self.repertoire).delete_if{|f| f[-4..-1] != '.txt'}).map do |f|
-        (Time.now - File.new("#{self.repertoire}/#{f}").ctime) / 60
-      end.delete_if{|e| e < self.nb_minutes_attentes_file}
-    rescue Errno::ENOENT => e
-      return []
-    end
-  end
-
-  def fichiers_vides(date_time)
+  def self.fichiers_vides(date_time)
     date_last_cron = HistoriqueCron.first.date
     where('jrlDate = DATE(?) AND jrlTime > TIME(?) AND jrlTime <= TIME(?)',
           date_time,
@@ -88,6 +77,17 @@ class Client < ActiveRecord::Base
 
   def emails_contacts
     contacts.map(&:email)
+  end
+
+  def fichiers_non_traites
+    return [] if self.repertoire.nil?
+    begin
+      return (Dir.entries(self.repertoire).delete_if{|f| f[-4..-1] != '.txt'}).map do |f|
+        (Time.now - File.new("#{self.repertoire}/#{f}").ctime) / 60
+      end.delete_if{|e| e < self.nb_minutes_attentes_file}
+    rescue Errno::ENOENT => e
+      return []
+    end
   end
 
   def trafic_existe?(date_time)

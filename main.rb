@@ -19,7 +19,7 @@ BdTask.send_mail
 # 2. délai traitement fichier
 puts '[2/5] délai traitement fichier'
 Client.all.each do |client|
-  unless fichiers_non_traites.empty?
+  unless client.fichiers_non_traites.empty?
     Notification.notif($config['mails_notif'],
                        "[2si] systeme notification taches non faites'",
                        "Il y a des fichiers non traite pour le client #{client.nom}").deliver
