@@ -23,7 +23,7 @@ puts '[2/5] délai traitement fichier'
 Client.all.each do |client|
   unless client.fichiers_non_traites.empty?
     puts "Il y a des fichiers non traite pour le client #{client.nom}"
-    Notification.notif($config['mails_notif'],
+    Notification.send_notif($config['mails_notif'],
                        "[2si] systeme notification taches non faites'",
                        "Il y a des fichiers non traite pour le client #{client.nom}").deliver
   end
@@ -36,12 +36,12 @@ Journal.fichiers_vides(cron_new.date).each do |journal|
   
   puts "Nous avons detecte un fichier vide pour le client #{client.nom}"
   
-  Notification.notif($config['mails_notif'],
-                     "[2si] fichier vide detecte'",
+  Notification.send_notif($config['mails_notif'],
+                     "[2si] fichier vide detecte",
                      "Nous avons détecté un fichier vide pour le client #{client.nom}").deliver
 
-  Notification.notif(client.emails_contacts,
-                     "[2si] fichier vide detecte'",
+  Notification.send_notif(client.emails_contacts,
+                     "[2si] fichier vide detecte",
                      "Un de vos fichiers que vous avez envoyé est vide").deliver
 end
 
@@ -53,12 +53,12 @@ PlageHoraire.a_verifier.each do |plage_horaire|
 end
 clients.uniq.each do |client|
   puts "Il n y a pas de trafic pour le client #{client.nom}"
-  Notification.notif($config['mails_notif'],
-                     "[2si] pas de trafic'",
+  Notification.send_notif($config['mails_notif'],
+                     "[2si] pas de trafic",
                      "Il n y a pas de trafic pour le client #{client.nom}").deliver
 
-  Notification.notif(client.emails_contacts,
-                     "[2si] pas de trafic'",
+  Notification.send_notif(client.emails_contacts,
+                     "[2si] pas de trafic",
                      "Nous n'avons pas détecté de trafic").deliver
 end
 
@@ -67,11 +67,11 @@ puts '[5/5] Trafic quotidien'
 Client.all.each do |client|
   unless client.trafic_existe?(cron_new.date)
     puts "Il n y a pas eu de trafic aujourd'hui pour le client #{client.nom}"
-    Notification.notif($config['mails_notif'],
+    Notification.send_notif($config['mails_notif'],
                        "[2si] pas de trafic quotidien'",
                        "Il n y a pas eu de trafic aujourd'hui pour le client #{client.nom}").deliver
 
-    Notification.notif(client.emails_contacts,
+    Notification.send_notif(client.emails_contacts,
                        "[2si] pas de trafic quotidien'",
                        "Nous n'avons pas détecté de trafic aujourd'hui").deliver
   end
