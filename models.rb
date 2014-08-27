@@ -35,7 +35,7 @@ class Journal < ActiveRecord::Base
 
   def fichier_backup
     return '' if client.nil?
-    "#{client.repertoire_backup}/#{jrlPushFile}.old"
+    "#{client.repertoire_backup}/#{jrlPushFile}.OLD"
   end
 
   def self.fichiers_vides(date_time)
