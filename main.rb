@@ -1,4 +1,6 @@
 #!/usr/bin/env ruby
+# encoding: utf-8
+
 require './models.rb'
 require 'yaml'
 require './mailer.rb'
@@ -32,7 +34,7 @@ puts '[3/5] Fichiers Vides'
 Journal.fichiers_vides(cron_new.date).each do |journal|
   client = journal.client
   
-  puts "Nous avons détecté un fichier vide pour le client #{client.nom}"
+  puts "Nous avons detecte un fichier vide pour le client #{client.nom}"
   
   Notification.notif($config['mails_notif'],
                      "[2si] fichier vide detecte'",
