@@ -133,6 +133,7 @@ class BdTask < ActiveRecord::Base
 
   def self.send_mail
     return false if untreated.empty?
+    puts 'il y a des taches non traitees'
     Notification.send_notif($config['mails_notif'],
                             '[2si] systeme notification taches non faites',
                             'Impossible actuellement d\'envoyer des messages!').deliver
