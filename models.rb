@@ -29,10 +29,12 @@ class Journal < ActiveRecord::Base
   end
 
   def fichier
+    return '' if client.nil?
     "#{client.repertoire}/#{jrlPushFile}"
   end
 
   def fichier_backup
+    return '' if client.nil?
     "#{client.repertoire_backup}/#{jrlPushFile}.old"
   end
 
@@ -42,14 +44,19 @@ class Journal < ActiveRecord::Base
           date_time,
           date_last_cron,
           date_time).to_a.delete_if do |journal|
-      begin
-        f = File.new(journal.fichier)
-      rescue Errno::ENOENT => e
+      if client.nil?
+        puts "client #{self.clt_cltCode} pas enregistré"
+        true
+      else
         begin
-          f = File.new(journal.fichier_backup)
-          not f.size.zero?
+          f = File.new(journal.fichier)
         rescue Errno::ENOENT => e
-          true
+          begin
+            f = File.new(journal.fichier_backup)
+            not f.size.zero?
+          rescue Errno::ENOENT => e
+            true
+          end
         end
       end
     end
