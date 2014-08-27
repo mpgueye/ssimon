@@ -41,7 +41,7 @@ class Journal < ActiveRecord::Base
     where('jrlDate = DATE(?) AND jrlTime > TIME(?) AND jrlTime <= TIME(?)',
           date_time,
           date_last_cron,
-          date_time).delete_if do |journal|
+          date_time).to_a.delete_if do |journal|
       begin
         f = File.new(journal.fichier)
       rescue Errno::ENOENT => e
