@@ -20,6 +20,7 @@ BdTask.send_mail
 puts '[2/5] délai traitement fichier'
 Client.all.each do |client|
   unless client.fichiers_non_traites.empty?
+    puts "Il y a des fichiers non traite pour le client #{client.nom}"
     Notification.notif($config['mails_notif'],
                        "[2si] systeme notification taches non faites'",
                        "Il y a des fichiers non traite pour le client #{client.nom}").deliver
@@ -30,6 +31,9 @@ end
 puts '[3/5] Fichiers Vides'
 Journal.fichiers_vides(cron_new.date).each do |journal|
   client = journal.client
+  
+  puts "Nous avons détecté un fichier vide pour le client #{client.nom}"
+  
   Notification.notif($config['mails_notif'],
                      "[2si] fichier vide detecte'",
                      "Nous avons détecté un fichier vide pour le client #{client.nom}").deliver
@@ -46,6 +50,7 @@ PlageHoraire.a_verifier.each do |plage_horaire|
   clients << plage_horaire.client if plage_horaire.non_envoye?
 end
 clients.uniq.each do |client|
+  puts "Il n y a pas de trafic pour le client #{client.nom}"
   Notification.notif($config['mails_notif'],
                      "[2si] pas de trafic'",
                      "Il n y a pas de trafic pour le client #{client.nom}").deliver
@@ -59,6 +64,7 @@ end
 puts '[5/5] Trafic quotidien'
 Client.all.each do |client|
   unless client.trafic_existe?(cron_new.date)
+    puts "Il n y a pas eu de trafic aujourd'hui pour le client #{client.nom}"
     Notification.notif($config['mails_notif'],
                        "[2si] pas de trafic quotidien'",
                        "Il n y a pas eu de trafic aujourd'hui pour le client #{client.nom}").deliver
