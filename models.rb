@@ -44,8 +44,8 @@ class Journal < ActiveRecord::Base
           date_time,
           date_last_cron,
           date_time).to_a.delete_if do |journal|
-      if client.nil?
-        puts "client #{self.clt_cltCode} pas enregistre"
+      if journal.client.nil?
+        puts "client #{journal.clt_cltCode} pas enregistre"
         true
       else
         begin
