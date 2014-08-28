@@ -24,8 +24,8 @@ Client.all.each do |client|
   unless client.fichiers_non_traites.empty?
     puts "Il y a des fichiers non traite pour le client #{client.nom}"
     Notification.send_notif($config['mails_notif'],
-                       "[2si] systeme notification taches non faites'",
-                       "Il y a des fichiers non traite pour le client #{client.nom}").deliver
+                            "[2si] systeme notification taches non faites'",
+                            "Il y a des fichiers non traite pour le client #{client.nom}").deliver
   end
 end
 
@@ -37,12 +37,12 @@ Journal.fichiers_vides(cron_new.date).each do |journal|
   puts "Nous avons detecte un fichier vide pour le client #{client.nom}"
   
   Notification.send_notif($config['mails_notif'],
-                     "[2si] fichier vide detecte",
-                     "Nous avons détecté un fichier vide pour le client #{client.nom}").deliver
+                          '[2si] fichier vide detecte',
+                          "Nous avons détecté un fichier vide (#{journal.jrlPushFile}) traité le #{journal.jrlDate} à #{journal.jrlTime}) du client #{client.nom}").deliver
 
   Notification.send_notif(client.emails_contacts,
-                     "[2si] fichier vide detecte",
-                     "Un de vos fichiers que vous avez envoyé est vide").deliver
+                          '[2si] fichier vide detecte',
+                          'Un de vos fichiers que vous avez envoyé est vide').deliver
 end
 
 # 4. Trafic par plage horaire
@@ -54,12 +54,12 @@ end
 clients.uniq.each do |client|
   puts "Il n y a pas de trafic pour le client #{client.nom}"
   Notification.send_notif($config['mails_notif'],
-                     "[2si] pas de trafic",
-                     "Il n y a pas de trafic pour le client #{client.nom}").deliver
+                          '[2si] pas de trafic',
+                          "Il n y a pas de trafic pour le client #{client.nom}").deliver
 
   Notification.send_notif(client.emails_contacts,
-                     "[2si] pas de trafic",
-                     "Nous n'avons pas détecté de trafic").deliver
+                          '[2si] pas de trafic',
+                          "Nous n'avons pas détecté de trafic").deliver
 end
 
 # 5. Trafic quotidien
@@ -68,12 +68,12 @@ Client.all.each do |client|
   unless client.trafic_existe?(cron_new.date)
     puts "Il n y a pas eu de trafic aujourd'hui pour le client #{client.nom}"
     Notification.send_notif($config['mails_notif'],
-                       "[2si] pas de trafic quotidien'",
-                       "Il n y a pas eu de trafic aujourd'hui pour le client #{client.nom}").deliver
+                            '[2si] pas de trafic quotidien',
+                            "Il n y a pas eu de trafic aujourd'hui pour le client #{client.nom}").deliver
 
     Notification.send_notif(client.emails_contacts,
-                       "[2si] pas de trafic quotidien'",
-                       "Nous n'avons pas détecté de trafic aujourd'hui").deliver
+                            '[2si] pas de trafic quotidien',
+                            "Nous n'avons pas détecté de trafic aujourd'hui").deliver
   end
 end
 
