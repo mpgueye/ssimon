@@ -38,7 +38,7 @@ Journal.fichiers_vides(cron_new.date).each do |journal|
   
   Notification.send_notif($config['mails_notif'],
                           '[2si] fichier vide detecte',
-                          "Nous avons détecté un fichier vide (#{journal.jrlPushFile}) traité le #{journal.jrlDate} à #{journal.jrlTime}) du client #{client.nom}").deliver
+                          "Nous avons détecté un fichier vide (#{journal.jrlPushFile}) traité le #{journal.jrlDate} à #{journal.jrlTime.strftime('%H:%M:%S')}) du client #{client.nom}").deliver
 
   Notification.send_notif(client.emails_contacts,
                           '[2si] fichier vide detecte',
