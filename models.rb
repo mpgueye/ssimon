@@ -114,10 +114,15 @@ class PlageHoraire < ActiveRecord::Base
   self.table_name = 'mon_plage_horaires'
 
   belongs_to :client, class_name: Client, foreign_key: :client_id
+  
+  def self.a_verifier
+    date_last_cron = HistoriqueCron.first.date
+    where('jour = ? and TIME(?) <= heure_fin AND heure_fin <= TIME(?)', Time.now.wday, date_last_cron, Time.now)
+  end
 
-  scope :a_verifier, -> {
-    where('jour = ? and heure_debut <= TIME(?) AND heure_fin >= TIME(?)', Time.now.wday, Time.now, Time.now)
-  }
+  # scope :a_verifier, -> {
+  #   where('jour = ? and heure_debut <= TIME(?) AND TIME(?) <= heure_fin', Time.now.wday, Time.now, Time.now)
+  # }
 
   def non_envoye?
     t = Time.now
